@@ -36,6 +36,14 @@ def start_instance():
 	else:
 		print("Failed")
 
+
+###4번. available_regions 함수
+
+def available_regions():
+	responce = client.describe_regions()
+	for region in responce['Regions']:
+		print("[region] " + region['RegionName'].ljust(15), "[endpoint] " + region['Endpoint'])
+
 ###5번. stop_instance 함수
 def stop_instance():
 	id = input("Enter instance id: ")
