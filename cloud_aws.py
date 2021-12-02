@@ -62,10 +62,13 @@ def create_instance():
 	print("Successfully started EC2 instance " + instance[0].id + "based on AMI " + imageid)
 
 ### 7번. reboot_instance 함수
-
+def reboot_instance():
+	id = input("Enter instance id: ")
+	response = client.reboot_instances(InstanceIds = [id])
+	print("Rebooting .... " + id)
 ### 8번. list_images 함수
 def list_images():
-	response = client.describe_images(Owners=['self'])
+	response = client.describe_images(Owners = ['self'])
 	for image in response['Images']:
 		print("[ImageID] "  + response['Images'][0]['ImageId'], "[Name] " + response['Images'][0]['Name'],
 		 "[Owner] " + response['Images'][0]['OwnerId'])
