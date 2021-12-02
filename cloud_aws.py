@@ -18,15 +18,33 @@ def list_instance() :
             		
 		
 ### 2번. available_zones 함수
+
 def available_zones():
 	response = client.describe_availability_zones()
 	for zone in response['AvailabilityZones']:
 		print("[id] " + zone['ZoneId'], "[region] " + zone['RegionName'], "[zone] " + zone['ZoneName'])
 			
 	
-		
-		
-		
+###3번. start_instance 함수
+
+def start_instance():
+	id = input("Enter instance id: ")
+	response = client.start_instances(InstanceIds=[id])
+	print("Starting .... " + response['StartingInstances'][0]['InstanceId'])		
+	if response['StartingInstances'][0]['CurrentState']['Name'] == 'pending':
+		print("Successfully started instance " + response['StartingInstances'][0]['InstanceId'])
+	else:
+		print("Failed")
+
+###5번. stop_instance 함수
+def stop_instance():
+	id = input("Enter instance id: ")
+	response = client.stop_instances(InstanceIds=[id])	
+	if response['StoppingInstances'][0]['CurrentState']['Name'] == 'stopping':
+		print("Successfully stop instance " + response['StoppingInstances'][0]['InstanceId'])
+	else:
+		print("Failed")
+
 ### 메인 함수###
 if __name__ == '__main__':
 	number = 0
@@ -56,6 +74,12 @@ if __name__ == '__main__':
 		elif number == 3:
 			start_instance()
 			
-		elif number == 7:
+		elif number == 4:
+			available_regions()
+		
+		elif number == 5:
+			stop_instance()
+			
+		elif number == 4:
 			reboot_instance()
 		
